@@ -1,0 +1,39 @@
+version: '2'
+services:
+  web:
+    container_name: ffmpeg
+    build:
+      context: .
+    volumes:
+      - .:/ffmpeg
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "3030:3030"
+    environment:
+      # "AWS_ACCESS_KEY_ID": "${AWS_ACCESS_KEY_ID}"
+      # "AWS_SECRET_ACCESS_KEY": "${AWS_SECRET_ACCESS_KEY}"
+      # "AWS_iDEFAULT_REGION": "${AWS_DEFAULT_REGION}"
+      # "AWS_REGION": "${AWS_REGION}"
+      "DB_ENV": "${DB_ENV}"
+      "DB_HOST": mysql
+      "DB_USER": "${DB_USER}"
+      "DB_PASSWORD": "${DB_PASSWORD}"
+      "RAILS_ENV": "${RAILS_ENV}"
+    links:
+      - mysql
+
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ffmpeg_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"   #rootユーザ用のパスワード
+      MYSQL_USER: "${DB_USER}"                #作業ユーザ名
+      MYSQL_PASSWORD: "${DB_PASSWORD}"        #作業ユーザ用のパスワード
+      MYSQL_DATABASE: "${DB_USER}_${DB_ENV}"  #作成するDB名
+      TZ: "Asia/Tokyo"
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
