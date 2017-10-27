@@ -16,7 +16,11 @@ default: &default
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
   socket: /var/lib/mysql/mysql.sock
-
+  charset: utf8
+  collation: utf8_general_ci
+  reconnect: false
+  host: <%= ENV['DB_HOST'] || 'localhost' %>
+  
 development:
   <<: *default
   database: ffmpeg_development

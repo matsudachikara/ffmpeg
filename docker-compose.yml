@@ -1,7 +1,7 @@
 version: '2'
 services:
   web:
-    container_name: ffmpeg
+    container_name: ffmpeg_web
     build:
       context: .
     volumes:
@@ -21,11 +21,12 @@ services:
       "RAILS_ENV": "${RAILS_ENV}"
     links:
       - mysql
+      - ffmpeg
 
   mysql:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev.mysql
     container_name: ffmpeg_mysql
     environment:
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"   #rootユーザ用のパスワード
@@ -37,3 +38,6 @@ services:
       - 3306:3306
     volumes:
       - ./mysql:/var/lib/mysql
+
+  ffmpeg:
+    image: matsudachikara/ffmpeg
