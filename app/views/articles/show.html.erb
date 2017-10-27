@@ -9,9 +9,11 @@
   <strong>Video:</strong>
 </p>
 <p>
-  <%= link_to @article.video_url.to_s do %>
-      <%= image_tag(@article.video_url(:screenshot).to_s, id: "video", :alt => "screenshot") %>
-  <% end %>
+  <%= video_tag @article.video_url.to_s, :controls => true, :autobuffer => true %><br>
+  
+  <% #=  link_to @article.video_url.to_s do %>
+    <% #= image_tag(@article.video_url(:screenshot).to_s, id: "video", :alt => "screenshot") %>
+  <% # end %>
 </p>
 
 <%= link_to 'Edit', edit_article_path(@article) %> |
