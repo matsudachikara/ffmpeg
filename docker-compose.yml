@@ -14,7 +14,6 @@ services:
       # "AWS_SECRET_ACCESS_KEY": "${AWS_SECRET_ACCESS_KEY}"
       # "AWS_iDEFAULT_REGION": "${AWS_DEFAULT_REGION}"
       # "AWS_REGION": "${AWS_REGION}"
-      "DB_ENV": "${DB_ENV}"
       "DB_HOST": mysql
       "DB_USER": "${DB_USER}"
       "DB_PASSWORD": "${DB_PASSWORD}"
