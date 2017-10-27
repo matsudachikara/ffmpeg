@@ -40,3 +40,5 @@ services:
 
   ffmpeg:
     image: matsudachikara/ffmpeg
+    volumes:
+      - ./public/videos
