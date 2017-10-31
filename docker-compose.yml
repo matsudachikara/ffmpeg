@@ -41,4 +41,4 @@ services:
   ffmpeg:
     image: matsudachikara/ffmpeg
     volumes:
-      - ./public/videos
+      - /home/chikara/projects/ffmpeg/public/videos
