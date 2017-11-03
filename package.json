@@ -3,5 +3,8 @@
   "private": true,
   "dependencies": {
     "hls.js": "^0.8.5"
+  },
+  "devDependencies": {
+    "hls.js": "^0.8.5"
   }
 }
