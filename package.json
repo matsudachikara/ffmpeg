@@ -1,5 +1,7 @@
 {
   "name": "ffmpeg",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "hls.js": "^0.8.5"
+  }
 }

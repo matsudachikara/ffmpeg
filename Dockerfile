@@ -1,4 +1,4 @@
-FROM    centos:7 AS base
+FROM    centos AS base
 
 # ffmpeg環境構築
 RUN     yum -y install libgomp && \
@@ -25,7 +25,7 @@ ENV         FFMPEG_VERSION=3.1.11     \
             THEORA_VERSION=1.1.1      \
             VORBIS_VERSION=1.3.5      \
             VPX_VERSION=1.6.1         \
-            X264_VERSION=20170226-2245-stable \
+            X264_VERSION=20171031-2245-stable \
             X265_VERSION=2.3          \
             XVID_VERSION=1.3.4        \
             FREETYPE_VERSION=2.5.5    \
@@ -78,16 +78,16 @@ RUN \
         make install && \
         rm -rf ${DIR}
 ## x264 http://www.videolan.org/developers/x264.html
-RUN \
-        DIR=/tmp/x264 && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sL https://ftp.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-${X264_VERSION}.tar.bz2 | \
-        tar -jx --strip-components=1 && \
-        ./configure --prefix="${PREFIX}" --enable-shared --enable-pic --disable-cli && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
+#RUN \
+#        DIR=/tmp/x264 && \
+#        mkdir -p ${DIR} && \
+#        cd ${DIR} && \
+#        curl -sL #https://ftp.videolan.org/videolan/x264/snapshots/x264-snapshot-${X264_V#ERSION}.tar.bz2 | \
+#        tar -jx --strip-components=1 && \
+#        ./configure --prefix="${PREFIX}" --enable-shared --enable-pic --disable-cli && \
+#        make && \
+#        make install && \
+#        rm -rf ${DIR}
 ### x265 http://x265.org/
 RUN \
         DIR=/tmp/x265 && \
@@ -295,7 +295,7 @@ RUN  \
         --enable-libx265 \
         --enable-libxvid \
         --enable-gpl \
-        --enable-libx264 \
+#        --enable-libx264 \
         --enable-nonfree \
         --enable-openssl \
         --enable-libfdk_aac \
@@ -327,8 +327,8 @@ COPY --from=build /usr/local/ /usr/local/
 # Rails環境構築
 ENV LANG=en_US.UTF-8 \
     RUBY_MAJOR=2.4 \
-    RUBY_VERSION=2.4.3 \
-    RUBY_DOWNLOAD_SHA256=a330e10d5cb5e53b3a0078326c5731888bb55e32c4abfeb27d9e7f8e5d000250 \
+    RUBY_VERSION=2.4.2 \
+    RUBY_DOWNLOAD_SHA256=93b9e75e00b262bc4def6b26b7ae8717efc252c47154abb7392e54357e6c8c9c \
     RUBY_DOWNLOAD_MIRROR=https://cache.ruby-lang.org/pub/ruby/
 
 # Development tools for compiling Ruby and native gem extension
@@ -337,7 +337,7 @@ ENV LANG=en_US.UTF-8 \
 RUN yum update -y && \
     yum install -y autoconf gcc gcc-c++ make automake patch && \
     yum install -y git openssh curl which tar gzip bzip2 unzip zip && \
-    yum install -y openssl-devel libyaml-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel && \
+    yum install -y openssl-devel libyaml-devel libffi-devel readline-devel ruby-devel zlib-devel gdbm-devel ncurses-devel libxml2-devel libxslt-devel sqlite-devel && \
     yum install -y mariadb-devel postgresql-libs postgresql-devel && \
     yum install -y epel-release yum-utils && \
     yum-config-manager --enable epel && \
@@ -366,7 +366,7 @@ COPY . /ffmpeg
 EXPOSE 3030
 RUN gem install nokogiri -- --use-system-libraries && \
     gem install rails --pre && \
-    bundle install && \
-    bundle clean
+    bundle install
+#    bundle clean
 
 CMD lib/docker/run.sh

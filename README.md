@@ -1,29 +1,33 @@
-# README
+* Rails, ffmpegを同じコンテナでbuildする
+  * dcoker pullでcentos7のイメージをダウンロード
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+    `Docker pull centos:latest`
+  * Dockerfileとdocker-compose.ymlでコンテナを作成
 
-Things you may want to cover:
+    `docker-compose up`
 
-* Ruby version
+* Dockerコンテナ内でDB作成、マイグレーション
+```
+docker-compose run web bundle exec rake db:create
+docker-compose run web bundle exec rake db:migrate
+```
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-  ```
-  docker-compose run ffmpeg_mysql bundle exec rake db:create
-  docker-compose run ffmpeg_mysql bundle exec rake db:migrate
-  ```
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-  - ffmpeg使う時はffmpegコンテナをその起動して呼び出す
+* ffmpeg使う時はffmpegコンテナをその起動して呼び出す
     docker run -it -v=$(pwd):/tmp/workdir matsudachikara/ffmpeg:latest $@
 
-* Deployment instructions
+* その他dockerコマンド
+  * コンテナに入りたい時
 
-* ...
+    `docker exec -it ffmpeg_web bash`
+
+  * dockerコンテナ一覧表示
+
+      `docker ps`
+
+  * dockerイメージ一覧表示
+
+      `docker images`
+
+  * dockerコンテナ削除
+
+      `docker rm コンテナ名 or コンテナID`

@@ -9,8 +9,8 @@
   <strong>Video:</strong>
 </p>
 <p>
-  <%= video_tag @article.video_url.to_s, :controls => true, :autobuffer => true %><br>
-  
+  <%= video_tag @article.video_url.to_s, id: "video", controls: true, autobuffer: true %><br>
+
   <% #=  link_to @article.video_url.to_s do %>
     <% #= image_tag(@article.video_url(:screenshot).to_s, id: "video", :alt => "screenshot") %>
   <% # end %>
@@ -18,3 +18,17 @@
 
 <%= link_to 'Edit', edit_article_path(@article) %> |
 <%= link_to 'Back', articles_path %>
+
+<%= javascript_include_tag 'node_modules/hls.js/dist/hls.js' %>
+
+<script>
+  if(Hls.isSupported()) {
+    var video = document.getElementById('video');
+    var hls = new Hls();
+    hls.loadSource(video.src);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.play();
+  });
+ }
+</script>
