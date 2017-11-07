@@ -358,7 +358,7 @@ RUN set -ex && \
     make -j"$(nproc)" && \
     make install && \
     cd / && rm -rf /build && \
-    gem update --system && gem install bundler && \
+    gem update --system && \
     rm -rf "$(gem env home)"/cache/*
 
 WORKDIR /ffmpeg
