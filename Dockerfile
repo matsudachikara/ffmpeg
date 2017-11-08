@@ -16,7 +16,7 @@ ARG        MAKEFLAGS="-j2"
 
 ENV         FFMPEG_VERSION=3.1.11     \
             FDKAAC_VERSION=0.1.5      \
-            LAME_VERSION=3.99.5       \
+            LAME_VERSION=3.100       \
             LIBASS_VERSION=0.13.7     \
             OGG_VERSION=1.3.2         \
             OPENCOREAMR_VERSION=0.1.4 \
@@ -78,16 +78,16 @@ RUN \
         make install && \
         rm -rf ${DIR}
 ## x264 http://www.videolan.org/developers/x264.html
-#RUN \
-#        DIR=/tmp/x264 && \
-#        mkdir -p ${DIR} && \
-#        cd ${DIR} && \
-#        curl -sL #https://ftp.videolan.org/videolan/x264/snapshots/x264-snapshot-${X264_V#ERSION}.tar.bz2 | \
-#        tar -jx --strip-components=1 && \
-#        ./configure --prefix="${PREFIX}" --enable-shared --enable-pic --disable-cli && \
-#        make && \
-#        make install && \
-#        rm -rf ${DIR}
+RUN \
+        DIR=/tmp/x264 && \
+        mkdir -p ${DIR} && \
+        cd ${DIR} && \
+        curl -sL https://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-${X264_VERSION}.tar.bz2 | \
+        tar -jx --strip-components=1 && \
+        ./configure --prefix="${PREFIX}" --enable-shared --enable-pic --disable-cli && \
+        make && \
+        make install && \
+        rm -rf ${DIR}
 ### x265 http://x265.org/
 RUN \
         DIR=/tmp/x265 && \
@@ -295,7 +295,7 @@ RUN  \
         --enable-libx265 \
         --enable-libxvid \
         --enable-gpl \
-#        --enable-libx264 \
+        --enable-libx264 \
         --enable-nonfree \
         --enable-openssl \
         --enable-libfdk_aac \
