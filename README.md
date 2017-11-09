@@ -36,8 +36,14 @@ docker-compose run web bundle exec rake db:migrate
   * h264をhlsに変換
 
     ```
-    ffmpeg -i Star_Wars_-_The_Last_Jedi_-_Trailer_2__H.264_.mp4 -movflags faststart -profile:v 66 -level 3.0 -g 150 -b:v 519k -s 768x432 -acodec libfdk_aac -b:a 63.4k -ar 44100 -flags +loop-global_header -map 0 -bsf h264_mp4toannexb -f segment -segment_format mpegts -segment_time 5 -segment_list playlist.m3u8 v%03d.ts
+    ffmpeg -i Star_Wars_-_The_Last_Jedi_-_Trailer_2__H.264_.mp4 -vcodec libx264 -b:v 800k -acodec libfdk_aac -b:a 128k -flags +loop-global_header -map 0 -bsf h264_mp4toannexb -f segment -segment_format mpegts -segment_time 10 -segment_list playlist.m3u8 v%03d.ts
     ```
+
+* ffmpegオプション
+  ```
+  -movflags faststart # mp4のメタ情報を先頭にしてすぐ再生できるようにする
+  -vcodec libx264 # mp4変換用コーデック
+  ```
 
 * 参考
   * https://github.com/jrottenberg/ffmpeg
