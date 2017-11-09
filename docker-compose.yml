@@ -18,8 +18,11 @@ services:
       "DB_USER": "${DB_USER}"
       "DB_PASSWORD": "${DB_PASSWORD}"
       "RAILS_ENV": "${RAILS_ENV}"
+    tty: true
+    stdin_open: true
     links:
       - mysql
+      - redis
 
   mysql:
     build:
@@ -36,3 +39,39 @@ services:
       - 3306:3306
     volumes:
       - ./mysql:/var/lib/mysql
+
+  sidekiq:
+    container_name: ffmpeg_sidekiq
+    build:
+      context: .
+      dockerfile: Dockerfile.dev.sidekiq
+    depends_on:
+      - mysql
+      - redis
+    volumes:
+      - .:/piip_worker
+      - /etc/localtime:/etc/localtime
+    ports:
+      - 3000:3000
+    environment:
+      "DB_ENV": "${DB_ENV}"
+      "DB_HOST": "${DB_HOST}"
+      "DB_USER": "${DB_USER}"
+      "DB_PASSWORD": "${DB_PASSWORD}"
+      # "RAILS_ENV": "${RAILS_ENV}"
+      # "SECRET_KEY_BASE": "${SECRET_KEY_BASE}"
+    links:
+      - mysql
+      - redis
+
+  redis:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev.redis
+    container_name: ffmpeg_redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf

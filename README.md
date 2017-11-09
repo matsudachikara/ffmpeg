@@ -48,3 +48,4 @@ docker-compose run web bundle exec rake db:migrate
 * 参考
   * https://github.com/jrottenberg/ffmpeg
   * https://qiita.com/neko88/items/bda8d36bac38718c95c7
+  * https://qiita.com/joker1007/items/def9d58ddb00fafc936d
