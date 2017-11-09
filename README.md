@@ -1,3 +1,14 @@
+* 環境変数
+  ```
+  export DB_ENV="development"
+  export DB_HOST="localhost"
+  export DB_PASSWORD="password"
+  export DB_USER="root"
+  export RAILS_ENV="development"
+  ```
+
+  上記を~/.bash_profileに記入、保存して`source ~/.bash_profile`を実行してください
+
 * Rails, ffmpegを同じコンテナでbuildする
   * dcoker pullでcentos7のイメージをダウンロード
 
