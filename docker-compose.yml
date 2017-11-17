@@ -55,11 +55,13 @@ services:
       - 3000:3000
     environment:
       "DB_ENV": "${DB_ENV}"
-      "DB_HOST": "${DB_HOST}"
+      "DB_HOST": mysql
       "DB_USER": "${DB_USER}"
       "DB_PASSWORD": "${DB_PASSWORD}"
       # "RAILS_ENV": "${RAILS_ENV}"
       # "SECRET_KEY_BASE": "${SECRET_KEY_BASE}"
+    tty: true
+    stdin_open: true
     links:
       - mysql
       - redis

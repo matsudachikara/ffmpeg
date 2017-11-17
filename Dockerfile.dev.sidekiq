@@ -17,7 +17,7 @@ COPY . /ffmpeg
 EXPOSE 3030
 RUN gem install nokogiri -- --use-system-libraries && \
     gem install rails --pre && \
-    bundle install && \
+    bundle install --path vendor/bundle && \
     bundle clean
 
 CMD lib/docker/run_sidekiq.sh
