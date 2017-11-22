@@ -1,9 +1,9 @@
 * 環境変数
   ```
   export DB_ENV="development"
-  export DB_HOST="localhost"
-  export DB_PASSWORD="password"
+  export DB_HOST="mysql"
   export DB_USER="root"
+  export DB_PASSWORD="password"
   export RAILS_ENV="development"
   ```
 
@@ -16,6 +16,9 @@
   * Dockerfileとdocker-compose.ymlでコンテナを作成
 
     `docker-compose up`
+
+    ＊ffmpegのbuildに失敗する場合は、`https://github.com/jrottenberg/ffmpeg`のソースを確認すること！
+    ＊dockerfileのupdateが結構頻繁にされてます。
 
 * Dockerコンテナ内でDB作成、マイグレーション
 ```
