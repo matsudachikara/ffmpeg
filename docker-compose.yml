@@ -49,7 +49,7 @@ services:
       - mysql
       - redis
     volumes:
-      - .:/piip_worker
+      - .:/ffmpeg
       - /etc/localtime:/etc/localtime
     ports:
       - 3000:3000

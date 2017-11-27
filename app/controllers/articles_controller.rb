@@ -25,10 +25,9 @@ class ArticlesController < ApplicationController
   # POST /articles.json
   def create
     @article = Article.new(article_params)
-
     respond_to do |format|
       if @article.save
-        VideoConvertWorker.perform_async @article
+        VideoConvertWorker.perform_async @article.id
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
         format.json { render :show, status: :created, location: @article }
       else
@@ -42,7 +41,7 @@ class ArticlesController < ApplicationController
   # PATCH/PUT /articles/1.json
   def update
     respond_to do |format|
-      if @article.update(article_params) && @article.video.recreate_versions!
+      if @article.update(article_params) && @article.video_url.recreate_versions!
         format.html { redirect_to @article, notice: 'Article was successfully updated.' }
         format.json { render :show, status: :ok, location: @article }
       else
@@ -70,6 +69,6 @@ class ArticlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:title, :video)
+      params.require(:article).permit(:title, :video_url).merge(video_status: 'transcoding')
     end
 end

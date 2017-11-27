@@ -3,5 +3,4 @@
 :logfile: ./log/sidekiq.log
 :concurrency:  25
 :queues:
-  - default
-  - archive
+  - video_convert

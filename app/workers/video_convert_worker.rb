@@ -1,6 +1,6 @@
-class VideoConvertWorker
+class VideoConvertWorker < ApplicationController
   include Sidekiq::Worker
-  sidekiq_options queue: :video
+  sidekiq_options queue: :video_convert
 
   def perform(*args)
     VideoConvert.new(args[0])

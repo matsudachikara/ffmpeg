@@ -60,3 +60,4 @@ gem 'carrierwave'
 gem 'streamio-ffmpeg'
 gem 'sidekiq'
 gem 'sinatra', require: false
+gem 'redis-namespace'
